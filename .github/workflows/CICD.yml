@@ -21,7 +21,7 @@ jobs:
     name: Extract crate metadata
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
     - name: Extract crate information
@@ -55,7 +55,7 @@ jobs:
       with:
         toolchain: stable
         components: rustfmt
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
     - run: cargo fmt -- --check
@@ -66,7 +66,7 @@ jobs:
     needs: crate_metadata
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v7
+      uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
 
@@ -108,7 +108,7 @@ jobs:
       BUILD_CMD: cargo
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v7
+      uses: actions/checkout@v7.0.1
       with:
         persist-credentials: false
 
@@ -128,7 +128,7 @@ jobs:
 
     - name: Install cross
       if: matrix.job.use-cross
-      uses: taiki-e/install-action@v2
+      uses: taiki-e/install-action@v2.87.31
       with:
         tool: cross
 
@@ -354,7 +354,7 @@ jobs:
         echo "IS_RELEASE=${IS_RELEASE}" >> $GITHUB_OUTPUT
 
     - name: Publish archives and packages
-      uses: softprops/action-gh-release@v3
+      uses: softprops/action-gh-release@v3.0.3
       if: steps.is-release.outputs.IS_RELEASE
       with:
         prerelease: ${{ contains(needs.crate_metadata.outputs.version, '-') }}
@@ -371,7 +371,7 @@ jobs:
     needs: build
     if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-')
     steps:
-      - uses: vedantmgoyal2009/winget-releaser@v2
+      - uses: vedantmgoyal9/winget-releaser@v2
         with:
           identifier: sharkdp.hyperfine
           installers-regex: '-pc-windows-msvc\.zip$'
