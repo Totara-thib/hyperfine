@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
     - name: Extract crate information
       id: crate_metadata
       run: |
@@ -54,6 +56,8 @@ jobs:
         toolchain: stable
         components: rustfmt
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
     - run: cargo fmt -- --check
 
   min_version:
@@ -63,6 +67,8 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v7
+      with:
+        persist-credentials: false
 
     - name: Install rust toolchain (v${{ needs.crate_metadata.outputs.msrv }})
       uses: dtolnay/rust-toolchain@master
@@ -103,6 +109,8 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v7
+      with:
+        persist-credentials: false
 
     - name: Install prerequisites
       shell: bash
