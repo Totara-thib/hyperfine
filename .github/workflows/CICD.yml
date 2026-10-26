@@ -12,6 +12,9 @@ on:
       - master
     tags:
       - '*'
+permissions:
+  contents: read
+
 
 jobs:
   crate_metadata:
@@ -72,6 +75,8 @@ jobs:
       run: cargo test --locked ${{ env.MSRV_FEATURES }}
 
   build:
+    permissions:
+      contents: write
     name: ${{ matrix.job.target }} (${{ matrix.job.os }})
     runs-on: ${{ matrix.job.os }}
     needs: crate_metadata
