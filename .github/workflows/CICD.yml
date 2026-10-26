@@ -46,8 +46,9 @@ jobs:
     name: Ensure 'cargo fmt' has been run
     runs-on: ubuntu-24.04
     steps:
-    - uses: dtolnay/rust-toolchain@stable
+    - uses: dtolnay/rust-toolchain@master
       with:
+        toolchain: stable
         components: rustfmt
     - uses: actions/checkout@v7
     - run: cargo fmt -- --check
@@ -107,8 +108,9 @@ jobs:
         esac
 
     - name: Install Rust toolchain
-      uses: dtolnay/rust-toolchain@stable
+      uses: dtolnay/rust-toolchain@master
       with:
+        toolchain: stable
         targets: ${{ matrix.job.target }}
 
     - name: Install cross
@@ -319,13 +321,13 @@ jobs:
         fakeroot dpkg-deb --build "${DPKG_DIR}" "${DPKG_PATH}"
 
     - name: "Artifact upload: tarball"
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v7.0.2
       with:
         name: ${{ steps.package.outputs.PKG_NAME }}
         path: ${{ steps.package.outputs.PKG_PATH }}
 
     - name: "Artifact upload: Debian package"
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v7.0.2
       if: steps.debian-package.outputs.DPKG_NAME
       with:
         name: ${{ steps.debian-package.outputs.DPKG_NAME }}
